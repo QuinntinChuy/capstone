@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickClinique - Smart Healthcare Management</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">QuickClinique</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button class="btn btn-outline" onclick="openModal('loginModal')">Login</button>
+                <button class="btn btn-primary" onclick="openModal('registerModal')">Register</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero fade-in">
+                <h1>Smart Healthcare Management for Cebu City</h1>
+                <p>Streamline your healthcare experience with QuickClinique - book appointments, monitor queues, order medications, and connect with healthcare providers seamlessly.</p>
+                <button class="btn btn-primary btn-large" onclick="openModal('appointmentModal')">Book Appointment Now</button>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features fade-in" id="features">
+                <div class="feature-card" onclick="showFeature('appointments')">
+                    <div class="feature-icon">📅</div>
+                    <h3>Online Appointment Booking</h3>
+                    <p>Schedule appointments with your preferred doctors at convenient times. Select clinics, view availability, and book instantly.</p>
+                </div>
+                <div class="feature-card" onclick="showFeature('queue')">
+                    <div class="feature-icon">⏱️</div>
+                    <h3>Real-time Queue Monitoring</h3>
+                    <p>Track your position in the queue, estimated waiting times, and receive live updates to reduce physical waiting.</p>
+                </div>
+                <div class="feature-card" onclick="showFeature('messaging')">
+                    <div class="feature-icon">💬</div>
+                    <h3>Instant Communication</h3>
+                    <p>Direct messaging with clinic staff for inquiries, updates, and seamless patient-staff interaction.</p>
+                </div>
+                <div class="feature-card" onclick="showFeature('pharmacy')">
+                    <div class="feature-icon">💊</div>
+                    <h3>Online Prescription Ordering</h3>
+                    <p>Order prescribed medications directly from clinic pharmacies with convenient pickup or delivery options.</p>
+                </div>
+                <div class="feature-card" onclick="showFeature('notifications')">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Smart Notifications</h3>
+                    <p>Receive appointment confirmations, reminders, and updates via SMS and email to reduce no-shows.</p>
+                </div>
+                <div class="feature-card" onclick="showFeature('security')">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Secure Data Protection</h3>
+                    <p>Advanced security measures ensure your medical data remains confidential and protected at all times.</p>
+                </div>
+            </section>
+
+            <!-- Dashboard Section -->
+            <section class="dashboard fade-in" id="dashboard">
+                <div class="dashboard-header">
+                    <h2>Patient Dashboard</h2>
+                    <div class="queue-display">
+                        <div class="queue-number" id="queueNumber">A-045</div>
+                        <div class="queue-status">Your current queue position</div>
+                        <div>Estimated wait: <strong id="waitTime">15 minutes</strong></div>
+                        <button class="btn btn-primary" onclick="updateQueue()">Refresh Queue</button>
+                    </div>
+                </div>
+
+                <div class="dashboard-tabs">
+                    <button class="tab active" onclick="showTab('appointments-tab')">My Appointments</button>
+                    <button class="tab" onclick="showTab('prescriptions-tab')">Prescriptions</button>
+                    <button class="tab" onclick="showTab('messages-tab')">Messages</button>
+                    <button class="tab" onclick="showTab('profile-tab')">Profile</button>
+                </div>
+
+                <!-- Appointments Tab -->
+                <div id="appointments-tab" class="tab-content active">
+                    <div class="appointment-card">
+                        <div class="appointment-header">
+                            <div>
+                                <h4>Dr. Maria Santos - General Medicine</h4>
+                                <p>Cebu Medical Center</p>
+                            </div>
+                            <span class="appointment-status status-confirmed">Confirmed</span>
+                        </div>
+                        <p><strong>Date:</strong> June 15, 2025 at 2:00 PM</p>
+                        <p><strong>Notes:</strong> Regular checkup and consultation</p>
+                        <div class="appointment-actions">
+                            <button class="btn btn-outline" onclick="rescheduleAppointment('apt-1')">Reschedule</button>
+                            <button class="btn btn-secondary" onclick="cancelAppointment('apt-1')">Cancel</button>
+                        </div>
+                    </div>
+                    
+                    <div class="appointment-card">
+                        <div class="appointment-header">
+                            <div>
+                                <h4>Dr. John Lim - Cardiology</h4>
+                                <p>Heart Care Clinic</p>
+                            </div>
+                            <span class="appointment-status status-pending">Pending</span>
+                        </div>
+                        <p><strong>Date:</strong> June 20, 2025 at 10:30 AM</p>
+                        <p><strong>Notes:</strong> Follow-up consultation</p>
+                        <div class="appointment-actions">
+                            <button class="btn btn-outline" onclick="rescheduleAppointment('apt-2')">Reschedule</button>
+                            <button class="btn btn-secondary" onclick="cancelAppointment('apt-2')">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prescriptions Tab -->
+                <div id="prescriptions-tab" class="tab-content">
+                    <div class="prescription-card">
+                        <h4>Recent Prescription - Dr. Maria Santos</h4>
+                        <p><strong>Date:</strong> May 25, 2025</p>
+                        <div class="prescription-items">
+                            <div class="prescription-item">
+                                <span>Amoxicillin 500mg - 3x daily for 7 days</span>
+                                <button class="btn btn-primary btn-small" onclick="orderMedicine('amoxicillin')">Order Now</button>
+                            </div>
+                            <div class="prescription-item">
+                                <span>Paracetamol 500mg - As needed for pain</span>
+                                <button class="btn btn-primary btn-small" onclick="orderMedicine('paracetamol')">Order Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="prescription-card">
+                        <h4>Prescription History - Dr. John Lim</h4>
+                        <p><strong>Date:</strong> May 10, 2025</p>
+                        <div class="prescription-items">
+                            <div class="prescription-item">
+                                <span>Aspirin 100mg - 1x daily</span>
+                                <span class="status-ordered">Ordered</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Messages Tab -->
+                <div id="messages-tab" class="tab-content">
+                    <div class="message-container" id="messageContainer">
+                        <div class="message received">
+                            <div class="message-header">
+                                <strong>Dr. Maria Santos</strong>
+                                <span class="message-time">10:30 AM</span>
+                            </div>
+                            <p>Good morning! Please remember to take your medication as prescribed and come for your follow-up next week.</p>
+                        </div>
+                        <div class="message sent">
+                            <div class="message-header">
+                                <strong>You</strong>
+                                <span class="message-time">10:35 AM</span>
+                            </div>
+                            <p>Thank you, Doctor. I'll make sure to follow the prescription schedule.</p>
+                        </div>
+                    </div>
+                    <div class="message-input">
+                        <input type="text" id="messageInput" placeholder="Type your message..." class="form-input">
+                        <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+
+                <!-- Profile Tab -->
+                <div id="profile-tab" class="tab-content">
+                    <div class="profile-section">
+                        <h3>Personal Information</h3>
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-input" value="Juan Dela Cruz" id="fullName">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" value="juan.delacruz@email.com" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-input" value="+63 912 345 6789" id="phone">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date of Birth</label>
+                            <input type="date" class="form-input" value="1990-05-15" id="birthDate">
+                        </div>
+                        <button class="btn btn-primary" onclick="updateProfile()">Update Profile</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Login to QuickClinique</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" required id="loginEmail">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" required id="loginPassword">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2>Register for QuickClinique</h2>
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" required id="registerName">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" required id="registerEmail">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" class="form-input" required id="registerPhone">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" required id="registerPassword">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" class="form-input" required id="confirmPassword">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Appointment Modal -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('appointmentModal')">&times;</span>
+            <h2>Book New Appointment</h2>
+            <form onsubmit="handleAppointment(event)">
+                <div class="form-group">
+                    <label class="form-label">Select Clinic</label>
+                    <select class="form-select" required id="appointmentClinic">
+                        <option value="">Choose a clinic</option>
+                        <option value="cebu-medical">Cebu Medical Center</option>
+                        <option value="heart-care">Heart Care Clinic</option>
+                        <option value="family-clinic">Family Health Clinic</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Select Doctor</label>
+                    <select class="form-select" required id="appointmentDoctor">
+                        <option value="">Choose a doctor</option>
+                        <option value="dr-santos">Dr. Maria Santos - General Medicine</option>
+                        <option value="dr-lim">Dr. John Lim - Cardiology</option>
+                        <option value="dr-garcia">Dr. Ana Garcia - Pediatrics</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Preferred Date</label>
+                    <input type="date" class="form-input" required id="appointmentDate">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Preferred Time</label>
+                    <select class="form-select" required id="appointmentTime">
+                        <option value="">Choose time</option>
+                        <option value="09:00">9:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="14:00">2:00 PM</option>
+                        <option value="15:00">3:00 PM</option>
+                        <option value="16:00">4:00 PM</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Notes (Optional)</label>
+                    <textarea class="form-input" rows="3" id="appointmentNotes" placeholder="Any specific concerns or notes for the doctor"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Book Appointment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="notification" class="notification"></div>
+
+    <script src="../js/index.js"></script>
+</body>
+</html>
